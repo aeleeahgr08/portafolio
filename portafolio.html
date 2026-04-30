@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio de Arquitectura | Evelyn Aeleeah García Rochin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===================== VARIABLES ===================== */
+        :root {
+            --blanco: #FFFFFF;
+            --gris-claro: #F5F5F5;
+            --gris-fondo: #F9F9F9;
+            --gris-medio: #CCCCCC;
+            --gris-texto: #444;
+            --verde-profundo: rgba(79, 109, 93, 0.9);
+            --verde-transparente: rgba(79, 109, 93, 0.85);
+            --verde-acento: #6B8F71;
+            --texto-oscuro: #1A1A1A;
+            --fuente-principal: 'Inter', sans-serif;
+            --fuente-acento: 'Playfair Display', serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--blanco);
+            font-family: var(--fuente-principal);
+            color: var(--texto-oscuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===================== HEADER FIJO ===================== */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 2rem 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            height: 42px;
+            width: auto;
+        }
+
+        .site-title {
+            font-size: 0.8rem;
+            letter-spacing: 0.22rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            color: var(--texto-oscuro);
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.18rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            color: var(--texto-oscuro);
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 3px;
+            transition: border-color 0.3s, color 0.3s;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: var(--fuente-principal);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            border-bottom-color: var(--texto-oscuro);
+        }
+
+        .lang-switch {
+            font-size: 0.7rem;
+            letter-spacing: 0.15rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            border-bottom: 1px solid var(--texto-oscuro);
+            padding-bottom: 3px;
+            color: var(--texto-oscuro);
+            font-family: var(--fuente-principal);
+            transition: opacity 0.3s;
+        }
+
+        .lang-switch:hover { opacity: 0.5; }
+
+        /* ===================== SECCIONES ===================== */
+        .section {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* ===================== 1. INICIO ===================== */
+        #inicio {
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: var(--blanco);
+        }
+
+        .slider-track {
+            display: flex;
+            width: calc(680px * 6);
+            animation: scroll-infinite 35s linear infinite;
+        }
+
+        .slide {
+            position: relative;
+            width: 680px;
+            height: 85vh;
+            margin: 0 15px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--verde-profundo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-overlay .project-name {
+            color: var(--blanco);
+            font-family: var(--fuente-acento);
+            font-size: 2.2rem;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .slide:hover .project-overlay { opacity: 1; }
+        .slide:hover img { transform: scale(1.05); }
+
+        @keyframes scroll-infinite {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-680px * 3 - 90px)); }
+        }
+
+        /* ===================== 2. SOBRE MÍ ===================== */
+        #sobre-mi {
+            padding-top: 110px;
+        }
+
+        .about-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            padding: 4rem 0 6rem;
+        }
+
+        .image-side {
+            position: sticky;
+            top: 110px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(10%);
+            transition: filter 0.5s ease;
+        }
+
+        .profile-img:hover { filter: grayscale(0%); }
+
+        .text-side { padding-right: 2rem; }
+
+        .section-tag {
+            color: var(--verde-acento);
+            font-size: 0.7rem;
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .profile-name {
+            font-size: 2.4rem;
+            font-weight: 200;
+            letter-spacing: -0.01rem;
+            line-height: 1.15;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .bio-text {
+            font-weight: 300;
+            font-size: 1rem;
+            color: #444;
+            text-align: justify;
+        }
+
+        .bio-text p { margin-bottom: 1.5rem; }
+
+        /* ===================== 3. PROYECTOS ===================== */
+        #proyectos {
+            padding-top: 110px;
+        }
+
+        .projects-main {
+            padding: 4rem 4% 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-title-big {
+            font-size: 2.8rem;
+            font-weight: 200;
+            letter-spacing: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .project-card {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .project-info {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--verde-transparente);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card:hover img { transform: scale(1.1); }
+        .project-card:hover .project-info { opacity: 1; }
+
+        .project-info .project-name {
+            color: var(--blanco);
+            font-family: var(--fuente-acento);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+            transform: translateY(20px);
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-info .project-name { transform: translateY(0); }
+
+        .view-more {
+            color: var(--blanco);
+            font-size: 0.65rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--blanco);
+            padding-bottom: 2px;
+            opacity: 0.85;
+        }
+
+        /* ===================== SUBSECCIONES DE PROYECTO ===================== */
+        .project-detail {
+            display: none;
+            padding-top: 110px;
+        }
+
+        .project-detail.active {
+            display: block;
+        }
+
+        .detail-main {
+            padding: 4rem 8% 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-btn-wrap {
+            margin-bottom: 3rem;
+        }
+
+        .back-btn {
+            font-size: 0.7rem;
+            letter-spacing: 0.2rem;
+            color: var(--gris-texto);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--gris-texto);
+            padding-bottom: 4px;
+            cursor: pointer;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: var(--fuente-principal);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--verde-acento);
+            border-color: var(--verde-acento);
+        }
+
+        .project-detail-title {
+            font-size: 3rem;
+            font-weight: 200;
+            letter-spacing: 0.6rem;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .description-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            align-items: start;
+        }
+
+        .desc-text {
+            font-weight: 300;
+            font-size: 1rem;
+            color: var(--gris-texto);
+            text-align: justify;
+        }
+
+        .desc-text p { margin-bottom: 1.5rem; }
+
+        .project-meta hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin-bottom: 1.2rem;
+        }
+
+        .project-meta p {
+            font-size: 0.7rem;
+            letter-spacing: 0.13rem;
+            color: #888;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* ====== GALERÍA ====== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--gris-fondo);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+            display: block;
+        }
+
+        .gallery-item:hover img { transform: scale(1.03); }
+        .gallery-item.full-width { grid-column: span 2; }
+
+        .detail-footer {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        /* ===================== 4. CONTACTO ===================== */
+        #contacto {
+            padding-top: 110px;
+        }
+
+        .contact-main {
+            padding: 4rem 8% 5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 2.8rem;
+            font-weight: 200;
+            letter-spacing: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .info-side {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .details p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .details a {
+            color: var(--texto-oscuro);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .details a:hover { border-color: var(--verde-acento); }
+
+        .form-side form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            color: #666;
+        }
+
+        input, textarea {
+            border: none;
+            border-bottom: 1px solid var(--gris-medio);
+            padding: 0.8rem 0;
+            font-family: var(--fuente-principal);
+            font-size: 1rem;
+            font-weight: 300;
+            background: transparent;
+            outline: none;
+            transition: border-color 0.3s;
+            color: var(--texto-oscuro);
+        }
+
+        input:focus, textarea:focus { border-color: var(--verde-acento); }
+
+        textarea { height: 120px; resize: none; }
+
+        .submit-btn {
+            align-self: flex-start;
+            background-color: var(--texto-oscuro);
+            color: var(--blanco);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+            font-family: var(--fuente-principal);
+        }
+
+        .submit-btn:hover { background-color: var(--verde-acento); }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 1024px) {
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 968px) {
+            .about-container { grid-template-columns: 1fr; gap: 2rem; }
+            .image-side { position: static; }
+            .text-side { padding-right: 0; }
+            .profile-name { font-size: 2rem; }
+            .description-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-item.full-width { grid-column: span 1; }
+            .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+            .info-side { align-items: center; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            nav { gap: 1.2rem; }
+            .site-title { display: none; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .section-title-big, .contact-title { font-size: 2rem; letter-spacing: 0.4rem; }
+            .project-detail-title { font-size: 2rem; letter-spacing: 0.3rem; }
+            .slide { width: 400px; height: 70vh; }
+            @keyframes scroll-infinite {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-400px * 3 - 90px)); }
+            }
+        }
+
+        @media (max-width: 560px) {
+            nav { gap: 0.8rem; }
+            .nav-link { font-size: 0.6rem; letter-spacing: 0.08rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER GLOBAL ==================== -->
+    <header>
+        <div class="header-left">
+            <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777530173/Captura_de_pantalla_2026-04-29_205528_kifgvk.png" alt="Logo" class="logo">
+            <span class="site-title" data-es="PORTAFOLIO DE ARQUITECTURA" data-en="ARCHITECTURE PORTFOLIO">PORTAFOLIO DE ARQUITECTURA</span>
+        </div>
+        <nav>
+            <button class="nav-link active" onclick="showSection('inicio')" data-es="Inicio" data-en="Home">Inicio</button>
+            <button class="nav-link" onclick="showSection('sobre-mi')" data-es="Sobre Mí" data-en="About Me">Sobre Mí</button>
+            <button class="nav-link" onclick="showSection('proyectos')" data-es="Proyectos" data-en="Projects">Proyectos</button>
+            <button class="nav-link" onclick="showSection('contacto')" data-es="Contacto" data-en="Contact">Contacto</button>
+            <button class="lang-switch" id="lang-btn">EN | ES</button>
+        </nav>
+    </header>
+
+    <!-- ==================== 1. INICIO ==================== -->
+    <section id="inicio" class="section active">
+        <div class="hero-slider">
+            <div class="slider-track">
+                <!-- Proyecto 1 -->
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529565/ChatGPT_Image_28_abr_2026_10_53_48_a.m._dbsla4.png" alt="Biblioteca">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Biblioteca Pública" data-en="Public Library">Biblioteca Pública</span>
+                    </div>
+                </div>
+                <!-- Proyecto 2 -->
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529644/ChatGPT_Image_29_abr_2026_12_05_41_p.m._hsmdms.png" alt="Storhet">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Storhet" data-en="Storhet">Storhet</span>
+                    </div>
+                </div>
+                <!-- Proyecto 3 -->
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529693/ChatGPT_Image_29_abr_2026_12_37_13_p.m._riulfk.png" alt="Torre Mirador">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Torre Mirador" data-en="Watchtower">Torre Mirador</span>
+                    </div>
+                </div>
+                <!-- Clones para scroll infinito -->
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529565/ChatGPT_Image_28_abr_2026_10_53_48_a.m._dbsla4.png" alt="Biblioteca">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Biblioteca Pública" data-en="Public Library">Biblioteca Pública</span>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529644/ChatGPT_Image_29_abr_2026_12_05_41_p.m._hsmdms.png" alt="Storhet">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Storhet" data-en="Storhet">Storhet</span>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529693/ChatGPT_Image_29_abr_2026_12_37_13_p.m._riulfk.png" alt="Torre Mirador">
+                    <div class="project-overlay">
+                        <span class="project-name" data-es="Torre Mirador" data-en="Watchtower">Torre Mirador</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 2. SOBRE MÍ ==================== -->
+    <section id="sobre-mi" class="section">
+        <div class="about-container">
+            <div class="image-side">
+                <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777534103/PERFIL_PORTFOLIO_tlua6m.jpg" alt="Evelyn Aeleeah García Rochin" class="profile-img">
+            </div>
+            <div class="text-side">
+                <span class="section-tag" data-es="Sobre Mí" data-en="About Me">Sobre Mí</span>
+                <h2 class="profile-name">EVELYN AELEEAH GARCÍA ROCHIN</h2>
+                <div class="bio-text" id="bio-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. PROYECTOS ==================== -->
+    <section id="proyectos" class="section">
+        <!-- Catálogo -->
+        <div id="catalogo">
+            <div class="projects-main">
+                <div class="section-header">
+                    <h2 class="section-title-big" data-es="PROYECTOS" data-en="PROJECTS">PROYECTOS</h2>
+                </div>
+                <div class="projects-grid">
+                    <!-- Proyecto 1 -->
+                    <button class="project-card" onclick="showProjectDetail('sub1')">
+                        <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529565/ChatGPT_Image_28_abr_2026_10_53_48_a.m._dbsla4.png" alt="Biblioteca Pública">
+                        <div class="project-info">
+                            <span class="project-name" data-es="Biblioteca Pública" data-en="Public Library">Biblioteca Pública</span>
+                            <span class="view-more" data-es="Ver detalles" data-en="View details">Ver detalles</span>
+                        </div>
+                    </button>
+                    <!-- Proyecto 2 -->
+                    <button class="project-card" onclick="showProjectDetail('sub2')">
+                        <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529644/ChatGPT_Image_29_abr_2026_12_05_41_p.m._hsmdms.png" alt="Storhet">
+                        <div class="project-info">
+                            <span class="project-name" data-es="Storhet" data-en="Storhet">Storhet</span>
+                            <span class="view-more" data-es="Ver detalles" data-en="View details">Ver detalles</span>
+                        </div>
+                    </button>
+                    <!-- Proyecto 3 -->
+                    <button class="project-card" onclick="showProjectDetail('sub3')">
+                        <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529693/ChatGPT_Image_29_abr_2026_12_37_13_p.m._riulfk.png" alt="Torre Mirador">
+                        <div class="project-info">
+                            <span class="project-name" data-es="Torre Mirador" data-en="Watchtower">Torre Mirador</span>
+                            <span class="view-more" data-es="Ver detalles" data-en="View details">Ver detalles</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== 3.1 SUBSECCIÓN: BIBLIOTECA PÚBLICA ====== -->
+        <div id="sub1" class="project-detail">
+            <div class="detail-main">
+                <div class="back-btn-wrap">
+                    <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER A PROYECTOS" data-en="← BACK TO PROJECTS">← VOLVER A PROYECTOS</button>
+                </div>
+                <h1 class="project-detail-title" data-es="BIBLIOTECA PÚBLICA" data-en="PUBLIC LIBRARY">BIBLIOTECA PÚBLICA</h1>
+                <div class="description-grid">
+                    <div class="desc-text" id="desc-sub1"></div>
+                    <div class="project-meta">
+                        <hr>
+                        <p>Location: Chihuahua, México</p>
+                        <p>Typology: Cultural / Public Space</p>
+                    </div>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item full-width"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529565/ChatGPT_Image_28_abr_2026_10_53_48_a.m._dbsla4.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538822/ChatGPT_Image_28_abr_2026_11_22_22_a.m._epipmo.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539136/ChatGPT_Image_28_abr_2026_11_14_03_a.m._kkn04t.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539075/ChatGPT_Image_Apr_28_2026_11_55_20_AM_gktz7w.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538920/ChatGPT_Image_28_abr_2026_11_14_09_a.m._hhglv4.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538787/ChatGPT_Image_Apr_28_2026_11_49_14_AM_ijtsmu.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538818/ChatGPT_Image_28_abr_2026_11_18_50_a.m._irxdle.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538382/9_fe3sxt.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538381/10_dr4j0u.png" alt="Biblioteca"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777538382/11_twqvq3.png" alt="Biblioteca"></div>
+                </div>
+            </div>
+            <div class="detail-footer">
+                <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER AL CATÁLOGO" data-en="← BACK TO CATALOG">← VOLVER AL CATÁLOGO</button>
+            </div>
+        </div>
+
+        <!-- ====== 3.2 SUBSECCIÓN: STORHET ====== -->
+        <div id="sub2" class="project-detail">
+            <div class="detail-main">
+                <div class="back-btn-wrap">
+                    <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER A PROYECTOS" data-en="← BACK TO PROJECTS">← VOLVER A PROYECTOS</button>
+                </div>
+                <h1 class="project-detail-title" style="letter-spacing:1rem;">STORHET</h1>
+                <div class="description-grid">
+                    <div class="desc-text" id="desc-sub2"></div>
+                    <div class="project-meta">
+                        <hr>
+                        <p>Location: Chihuahua, México</p>
+                        <p>Typology: Mixed Use / Housing + Retail</p>
+                        <p>Levels: 4 Stories</p>
+                    </div>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item full-width"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529644/ChatGPT_Image_29_abr_2026_12_05_41_p.m._hsmdms.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539447/ChatGPT_Image_29_abr_2026_12_02_18_p.m._avn1y2.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777540817/ChatGPT_Image_Apr_30_2026_02_19_39_AM_ia655t.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539448/ChatGPT_Image_29_abr_2026_11_57_47_a.m._bibic5.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777540594/ChatGPT_Image_20_mar_2026_05_56_42_a.m._rve5oe.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539447/ChatGPT_Image_29_abr_2026_12_08_33_p.m._zgf9em.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539337/4_ywmufz.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539336/5_jwnxiv.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539336/6_xmdlby.png" alt="Storhet"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539337/7_dzjxe5.png" alt="Storhet"></div>
+                </div>
+            </div>
+            <div class="detail-footer">
+                <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER AL CATÁLOGO" data-en="← BACK TO CATALOG">← VOLVER AL CATÁLOGO</button>
+            </div>
+        </div>
+
+        <!-- ====== 3.3 SUBSECCIÓN: TORRE MIRADOR ====== -->
+        <div id="sub3" class="project-detail">
+            <div class="detail-main">
+                <div class="back-btn-wrap">
+                    <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER A PROYECTOS" data-en="← BACK TO PROJECTS">← VOLVER A PROYECTOS</button>
+                </div>
+                <h1 class="project-detail-title" data-es="TORRE MIRADOR" data-en="WATCHTOWER">TORRE MIRADOR</h1>
+                <div class="description-grid">
+                    <div class="desc-text" id="desc-sub3"></div>
+                    <div class="project-meta">
+                        <hr>
+                        <p>Location: Presa El Rejón, Chihuahua</p>
+                        <p>Typology: Landscape / Observation Tower</p>
+                        <p>Material: Steel &amp; Aluminum Panels</p>
+                    </div>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item full-width"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777529693/ChatGPT_Image_29_abr_2026_12_37_13_p.m._riulfk.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539383/ChatGPT_Image_29_abr_2026_12_34_10_p.m._jlg1sh.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539383/ChatGPT_Image_29_abr_2026_12_30_16_p.m._nemvm3.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777540274/ChatGPT_Image_Apr_30_2026_02_06_17_AM_cdptjf.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777540273/ChatGPT_Image_Apr_30_2026_02_10_14_AM_hliy9a.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539636/13_mpna9m.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539636/14_iqgloz.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539637/15_pfqpro.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539637/16_ilj7br.png" alt="Torre Mirador"></div>
+                    <div class="gallery-item"><img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777539636/17_vkevol.png" alt="Torre Mirador"></div>
+                </div>
+            </div>
+            <div class="detail-footer">
+                <button class="back-btn" onclick="backToCatalog()" data-es="← VOLVER AL CATÁLOGO" data-en="← BACK TO CATALOG">← VOLVER AL CATÁLOGO</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. CONTACTO ==================== -->
+    <section id="contacto" class="section">
+        <div class="contact-main">
+            <h2 class="contact-title" data-es="CONTACTO" data-en="CONTACT">CONTACTO</h2>
+            <div class="contact-wrapper">
+                <!-- Info -->
+                <div class="info-side">
+                    <img src="https://res.cloudinary.com/dz5n14moa/image/upload/v1777544624/ChatGPT_Image_Apr_30_2026_03_22_08_AM_pu87ut.png" alt="Logotipo Contacto" class="contact-logo">
+                    <div class="details">
+                        <p><strong>Email:</strong><br><a href="mailto:aeleeahgr08@gmail.com">aeleeahgr08@gmail.com</a></p>
+                        <p><strong>Phone:</strong><br><a href="tel:+526142030262">+52 614 203 02 62</a></p>
+                    </div>
+                </div>
+                <!-- Formulario -->
+                <div class="form-side">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label data-es="Nombre" data-en="Name">Nombre</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-es="Teléfono" data-en="Phone">Teléfono</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label data-es="Correo Electrónico" data-en="Email Address">Correo Electrónico</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-es="Mensaje" data-en="Message">Mensaje</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" data-es="Enviar Mensaje" data-en="Send Message">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ========== TEXTOS MULTILINGÜE ==========
+        const textContent = {
+            bio: {
+                es: `
+                    <p>Soy estudiante de arquitectura en "Isthmus Norte" con un fuerte interés en el diseño de espacios públicos y en cómo la arquitectura puede influir en la forma en que las personas viven, se sienten y se relacionan. Me interesa especialmente la relación entre la estructura, la habitabilidad y la experiencia del usuario, integrando estrategias bioclimáticas que aporten confort y respondan al contexto.</p>
+                    <p>Disfruto pensar la arquitectura como algo más que una construcción: como una experiencia. Busco crear espacios que fomenten el bienestar y la interacción social, donde cada elemento tenga la capacidad de comunicar y generar distintas sensaciones.</p>
+                    <p>Trabajo principalmente con herramientas de modelado 3D y visualización arquitectónica, lo que me permite explorar ideas de manera constante y desarrollar propuestas donde el proceso creativo es tan importante como el resultado. A lo largo de mi formación he desarrollado proyectos habitacionales, públicos y urbanos, en los que pongo especial atención en la calidad espacial, la circulación y los espacios de transición.</p>
+                    <p>Me considero una persona que se adapta bien al trabajo en equipo, con interés en aportar y seguir aprendiendo, especialmente en proyectos donde se pueda profundizar en la relación entre estructura, espacio, confort y comunidad dentro de una arquitectura contemporánea.</p>
+                    <p>Fuera del ámbito académico, me involucro en actividades que también implican creatividad y paciencia, como hornear pasteles, tejer a crochet y dibujar.</p>
+                `,
+                en: `
+                    <p>I am an architecture student at "Isthmus Norte" with a strong interest in public space design and how architecture can influence the way people live, feel, and interact. I am especially interested in the relationship between structure, habitability, and user experience, integrating bioclimatic strategies that provide comfort and respond to the context.</p>
+                    <p>I enjoy thinking of architecture as more than just a construction: as an experience. I seek to create spaces that foster well-being and social interaction, where each element has the capacity to communicate and generate different sensations.</p>
+                    <p>I work mainly with 3D modeling and architectural visualization tools, which allows me to constantly explore ideas and develop proposals where the creative process is as important as the result. Throughout my training, I have developed residential, public, and urban projects, where I pay special attention to spatial quality, circulation, and transition spaces.</p>
+                    <p>I consider myself a person who adapts well to teamwork, with an interest in contributing and continuing to learn, especially in projects where the relationship between structure, space, comfort, and community within contemporary architecture can be deepened.</p>
+                    <p>Outside the academic sphere, I get involved in activities that also involve creativity and patience, such as baking cakes, crocheting, and drawing.</p>
+                `
+            },
+            sub1: {
+                es: `
+                    <p>El proyecto plantea la reconversión de un área actualmente destinada a estacionamiento, en la ciudad de Chihuahua, México, en un equipamiento cultural que se integra al parque "El Palomar". La propuesta busca extender las cualidades espaciales del parque hacia el interior del edificio.</p>
+                    <p>Se articula a partir de un patio central de geometría circular, concebido como el corazón del proyecto. Este vacío permite la entrada controlada de luz natural y favorece la ventilación cruzada. La implantación responde además a una lógica de respeto por la vegetación existente, integrando los árboles preexistentes.</p>
+                    <p>El programa arquitectónico se organiza en dos niveles diferenciados por su carácter de uso. La planta baja concentra las actividades de mayor dinamismo e interacción pública. En contraste, la planta alta alberga funciones de carácter más introspectivo, garantizando condiciones óptimas de concentración y control acústico.</p>
+                    <p>El edificio adopta un lenguaje contemporáneo basado en la combinación de muros de concreto aparente y amplias superficies acristaladas. Esta dualidad material permite establecer una relación visual constante con el entorno inmediato.</p>
+                    <p>La propuesta se rige por principios de flexibilidad, accesibilidad universal, confort ambiental y seguridad. El proyecto busca transformar un espacio dominado por el automóvil en un nodo cultural activo consolidando un lugar de encuentro, aprendizaje y permanencia para la comunidad.</p>
+                `,
+                en: `
+                    <p>The project proposes the conversion of an area currently used as a parking lot in the city of Chihuahua, Mexico, into a cultural facility that integrates with "El Palomar" park. The proposal seeks to extend the park's spatial qualities into the building's interior.</p>
+                    <p>It is articulated around a central circular courtyard, conceived as the heart of the project. This void allows for controlled natural light and promotes cross ventilation. The implementation also responds to a logic of respect for existing vegetation, integrating pre-existing trees.</p>
+                    <p>The architectural program is organized into two levels, differentiated by their character of use. The ground floor concentrates the most dynamic activities and public interaction. In contrast, the upper floor houses more introspective functions, ensuring optimal conditions for concentration and acoustic control.</p>
+                    <p>The building adopts a contemporary language based on the combination of exposed concrete walls and large glass surfaces. This material duality establishes a constant visual relationship with the immediate surroundings.</p>
+                    <p>The proposal is governed by principles of flexibility, universal accessibility, environmental comfort, and safety. The project seeks to transform a space dominated by automobiles into an active cultural node, consolidating a place for meeting, learning, and permanence for the community.</p>
+                `
+            },
+            sub2: {
+                es: `
+                    <p>Storhet es un edificio contemporáneo de uso mixto ubicado en la ciudad de Chihuahua, México. El proyecto integra vivienda, comercio y estacionamiento dentro de una propuesta arquitectónica abierta, funcional y conectada con su entorno.</p>
+                    <p>La edificación se desarrolla en cuatro niveles. En planta baja se dispone un local comercial orientado hacia la calle, acompañado de un pequeño estacionamiento. En los niveles superiores se distribuyen doce departamentos diseñados bajo criterios de eficiencia espacial resolviendo de manera compacta las necesidades básicas de habitabilidad.</p>
+                    <p>Uno de los elementos más distintivos del proyecto es su configuración en dos bloques independientes, unidos por espacios de circulación. Esta disposición genera un patio central común que favorece la ventilación cruzada, la entrada de luz natural y promueve la convivencia.</p>
+                    <p>El edificio adopta un lenguaje industrial contemporáneo, donde la materialidad y la expresión estructural refuerzan su carácter. Storhet responde a la necesidad de optimizar el uso del suelo urbano mediante una propuesta que equilibra funcionalidad, eficiencia y calidad espacial.</p>
+                `,
+                en: `
+                    <p>Storhet is a contemporary mixed-use building located in the city of Chihuahua, Mexico. The project integrates housing, commerce, and parking within an open, functional architectural proposal connected to its surroundings.</p>
+                    <p>The building is developed over four levels. The ground floor features a commercial space oriented toward the street, accompanied by a small parking area. The upper levels house twelve apartments designed under spatial efficiency criteria, compactly resolving basic habitability needs.</p>
+                    <p>One of the most distinctive elements of the project is its configuration in two independent blocks, joined by circulation spaces. This layout creates a common central courtyard that promotes cross-ventilation, natural light entry, and encourages community interaction.</p>
+                    <p>The building adopts a contemporary industrial language, where materiality and structural expression reinforce its character. Storhet responds to the need to optimize urban land use through a proposal that balances functionality, efficiency, and spatial quality.</p>
+                `
+            },
+            sub3: {
+                es: `
+                    <p>El proyecto plantea una estructura vertical de observación implantada en un terreno con pendiente pronunciada en las inmediaciones del Parque El Rejón, en Chihuahua, México. La intervención responde a la necesidad de generar un punto de contemplación elevado que dialogue con el paisaje hídrico y topográfico del sitio.</p>
+                    <p>El conjunto se compone de dos elementos principales claramente diferenciados y complementarios: un puente de acceso que se configura como una pasarela horizontal y la torre vertical, concebida como una estructura ligera de múltiples niveles que integra plataformas intermedias y un mirador panorámico.</p>
+                    <p>El proyecto adopta un lenguaje abstracto inspirado en la obra de Piet Mondrian, reinterpretando sus principios compositivos a través de un sistema de perfiles de acero, columnas y vigas que garantizan ligereza y eficiencia estructural.</p>
+                    <p>Los entrepisos emplean rejillas que favorecen la permeabilidad visual, mientras que los elementos de color se materializan mediante paneles de aluminio compuesto, ofreciendo una experiencia espacial dinámica que culmina en la contemplación del entorno natural.</p>
+                `,
+                en: `
+                    <p>The project proposes a vertical observation structure located on a steep slope near El Rejón Park in Chihuahua, Mexico. The intervention responds to the need to create an elevated contemplation point that dialogues with the site's water and topographic landscape.</p>
+                    <p>The complex consists of two clearly differentiated and complementary elements: an access bridge configured as a horizontal walkway and the vertical tower, conceived as a lightweight multi-level structure that integrates intermediate platforms and a panoramic viewpoint.</p>
+                    <p>The project adopts an abstract language inspired by Piet Mondrian's work, reinterpreting his compositional principles through a system of steel profiles, columns, and beams that ensure lightness and structural efficiency.</p>
+                    <p>The mezzanines use gratings that promote visual permeability, while the colored elements are materialized through composite aluminum panels, offering a dynamic spatial experience that culminates in the contemplation of the natural environment.</p>
+                `
+            }
+        };
+
+        // ========== IDIOMA ==========
+        let currentLang = 'es';
+
+        function applyLanguage() {
+            // Textos con data-es / data-en
+            document.querySelectorAll('[data-es]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+            // Bloques de contenido dinámico
+            const bio = document.getElementById('bio-content');
+            if (bio) bio.innerHTML = textContent.bio[currentLang];
+
+            const d1 = document.getElementById('desc-sub1');
+            if (d1) d1.innerHTML = textContent.sub1[currentLang];
+
+            const d2 = document.getElementById('desc-sub2');
+            if (d2) d2.innerHTML = textContent.sub2[currentLang];
+
+            const d3 = document.getElementById('desc-sub3');
+            if (d3) d3.innerHTML = textContent.sub3[currentLang];
+
+            // Botón de idioma
+            document.getElementById('lang-btn').textContent = currentLang === 'es' ? 'EN | ES' : 'ES | EN';
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            applyLanguage();
+        });
+
+        // ========== NAVEGACIÓN ENTRE SECCIONES ==========
+        function showSection(id) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            // Mostrar la sección destino
+            document.getElementById(id).classList.add('active');
+            // Actualizar nav activo
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+            const targetBtn = document.querySelector(`.nav-link[onclick="showSection('${id}')"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            // Scroll arriba
+            window.scrollTo(0, 0);
+            // Si vamos a proyectos, mostrar catálogo
+            if (id === 'proyectos') {
+                backToCatalog();
+            }
+        }
+
+        // ========== NAVEGACIÓN DENTRO DE PROYECTOS ==========
+        function showProjectDetail(subId) {
+            // Ocultar catálogo
+            document.getElementById('catalogo').style.display = 'none';
+            // Ocultar todas las subsecciones
+            document.querySelectorAll('.project-detail').forEach(d => d.classList.remove('active'));
+            // Mostrar la subsección elegida
+            document.getElementById(subId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function backToCatalog() {
+            document.getElementById('catalogo').style.display = 'block';
+            document.querySelectorAll('.project-detail').forEach(d => d.classList.remove('active'));
+            window.scrollTo(0, 0);
+        }
+
+        // ========== FORMULARIO ==========
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name    = document.getElementById('name').value;
+            const phone   = document.getElementById('phone').value;
+            const email   = document.getElementById('email').value;
+            const msg     = document.getElementById('message').value;
+            const subject = `Contacto Portafolio - ${name}`;
+            const body    = `Nombre: ${name}%0D%0ATeléfono: ${phone}%0D%0AEmail: ${email}%0D%0AMensaje: ${msg}`;
+            window.location.href = `mailto:aeleeahgr08@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+        });
+
+        // ========== INIT ==========
+        applyLanguage();
+    </script>
+
+</body>
+</html>
